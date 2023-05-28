@@ -4,13 +4,14 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Weather_API</RootNamespace>
+        <RootNamespace>Weather.API</RootNamespace>
         <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
 		
 		<OpenApiSpecLocation>../../api-weather-ref/Weather-API-Ref/Weather-API-Ref/api-spec.json</OpenApiSpecLocation>
 		<ApiClientClassName>WeatherApiClient</ApiClientClassName>
 		<ApiClientNamespace>WeatherApiClient.Generation</ApiClientNamespace>
 		<ApiClientOutputDirectory>../../api-weather-ref/Weather-API-Ref/Weather-API-Ref/</ApiClientOutputDirectory>
+		<ApiClientProject>Weather-API-Ref.csproj</ApiClientProject>
     </PropertyGroup>
 
     <ItemGroup>
@@ -30,6 +31,7 @@
 	<Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">    
 		<Exec Command="dotnet swagger tofile --output $(OpenApiSpecLocation) $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
 		<Exec Command="$(NSwagExe) openapi2csclient /input:$(OpenApiSpecLocation)  /classname:$(ApiClientClassName) /namespace:$(ApiClientNamespace) /output:$(ApiClientOutputDirectory)\$(ApiClientClassName).cs" ConsoleToMSBuild="true" />	
+		<Exec Command="dotnet build $(ApiClientOutputDirectory)$(ApiClientProject)" />
 	</Target>
 
 </Project>
