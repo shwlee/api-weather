@@ -6,10 +6,19 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Weather_API</RootNamespace>
         <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+		
+		<OpenApiSpecLocation>../../api-weather-ref/Weather-API-Ref/Weather-API-Ref/api-spec.json</OpenApiSpecLocation>
+		<ApiClientClassName>WeatherApiClient</ApiClientClassName>
+		<ApiClientNamespace>WeatherApiClient.Generation</ApiClientNamespace>
+		<ApiClientOutputDirectory>../../api-weather-ref/Weather-API-Ref/Weather-API-Ref/</ApiClientOutputDirectory>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="NSwag.MSBuild" Version="13.19.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,5 +26,10 @@
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
+	
+	<Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">    
+		<Exec Command="dotnet swagger tofile --output $(OpenApiSpecLocation) $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
+		<Exec Command="$(NSwagExe) openapi2csclient /input:$(OpenApiSpecLocation)  /classname:$(ApiClientClassName) /namespace:$(ApiClientNamespace) /output:$(ApiClientOutputDirectory)\$(ApiClientClassName).cs" ConsoleToMSBuild="true" />	
+	</Target>
 
 </Project>

@@ -1,0 +1,3 @@
+[submodule "api-weather-ref"]
+	path = api-weather-ref
+	url = https://github.com/shwlee/api-weather-ref.git
