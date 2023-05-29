@@ -9,7 +9,7 @@
 		
 		<OpenApiSpecLocation>../../api-weather-ref/Weather-API-Ref/Weather-API-Ref/api-spec.json</OpenApiSpecLocation>
 		<ApiClientClassName>WeatherApiClient</ApiClientClassName>
-		<ApiClientNamespace>WeatherApiClient.Generation</ApiClientNamespace>
+		<ApiClientNamespace>Weather.API</ApiClientNamespace>
 		<ApiClientOutputDirectory>../../api-weather-ref/Weather-API-Ref/Weather-API-Ref/</ApiClientOutputDirectory>
 		<ApiClientProject>Weather-API-Ref.csproj</ApiClientProject>
     </PropertyGroup>
