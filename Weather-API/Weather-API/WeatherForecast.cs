@@ -1,6 +1,6 @@
 namespace Weather.API;
 
-public class WeatherForecast
+public class Weather
 {
     public DateTime Date { get; set; }
 
